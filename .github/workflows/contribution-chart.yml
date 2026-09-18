@@ -19,16 +19,149 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate contribution chart
-        uses: yoshi389111/github-profile-3d-contrib@latest
+      - name: Get GitHub contributions
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: Yina29
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api graphql -f query='
+          query {
+            user(login: "Yina29") {
+              contributionsCollection {
+                contributionCalendar {
+                  totalContributions
+                  weeks {
+                    contributionDays {
+                      date
+                      contributionCount
+                      color
+                      weekday
+                    }
+                  }
+                }
+              }
+            }
+          }' > contributions.json
 
-      - name: Commit generated files
+      - name: Generate 2D SVG
+        run: |
+          python3 <<'PY'
+          import json
+          from datetime import datetime
+
+          with open("contributions.json") as f:
+              data = json.load(f)
+
+          calendar = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+          weeks = calendar["weeks"]
+          total = calendar["totalContributions"]
+
+          cell = 12
+          gap = 3
+          step = cell + gap
+
+          left = 35
+          top = 45
+
+          width = left + len(weeks) * step + 20
+          height = top + 7 * step + 35
+
+          months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+          svg = []
+
+          svg.append(
+              f'<svg xmlns="http://www.w3.org/2000/svg" '
+              f'width="{width}" height="{height}" '
+              f'viewBox="0 0 {width} {height}">'
+          )
+
+          svg.append("""
+          <style>
+            text {
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                           Helvetica, Arial, sans-serif;
+              fill: #57606a;
+              font-size: 11px;
+            }
+
+            .title {
+              font-size: 14px;
+              font-weight: 600;
+              fill: #24292f;
+            }
+
+            rect {
+              rx: 2;
+            }
+          </style>
+          """)
+
+          svg.append(
+              f'<text class="title" x="{left}" y="20">'
+              f'{total} contributions in the last year</text>'
+          )
+
+          # Month labels
+          previous_month = None
+
+          for x, week in enumerate(weeks):
+              first_day = week["contributionDays"][0]["date"]
+              date = datetime.strptime(first_day, "%Y-%m-%d")
+
+              if date.month != previous_month:
+                  svg.append(
+                      f'<text x="{left + x * step}" y="37">'
+                      f'{months[date.month - 1]}</text>'
+                  )
+                  previous_month = date.month
+
+          # Contribution squares
+          for x, week in enumerate(weeks):
+              for day in week["contributionDays"]:
+                  y = day["weekday"]
+
+                  px = left + x * step
+                  py = top + y * step
+
+                  color = day["color"]
+
+                  svg.append(
+                      f'<rect x="{px}" y="{py}" '
+                      f'width="{cell}" height="{cell}" '
+                      f'fill="{color}">'
+                      f'<title>{day["date"]}: '
+                      f'{day["contributionCount"]} contributions</title>'
+                      f'</rect>'
+                  )
+
+          # Day labels
+          labels = {
+              1: "Mon",
+              3: "Wed",
+              5: "Fri"
+          }
+
+          for weekday, label in labels.items():
+              py = top + weekday * step + 10
+              svg.append(
+                  f'<text x="0" y="{py}">{label}</text>'
+              )
+
+          svg.append("</svg>")
+
+          with open("contribution-chart.svg", "w") as f:
+              f.write("\n".join(svg))
+          PY
+
+      - name: Commit contribution chart
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git diff --cached --quiet || git commit -m "Update contribution chart"
+
+          git add contribution-chart.svg
+
+          git diff --cached --quiet || \
+            git commit -m "Update contribution chart"
+
           git push
