@@ -8,8 +8,7 @@
 
 ![GitHub Contribution Chart](./contribution-chart.svg)
 ![Contribution Chart](./contribution-chart.svg)
-![GitHub Contributions](./profile-3d-contrib/profile-night-rainbow.svg)
-![GitHub Contributions](./profile-3d-contrib/profile-green.svg)
+![GitHub Contributions](./profile-3d-contrib/contribution-chart.svg)
 
 ![Jokes Card](https://readme-jokes.vercel.app/api?theme=tokyonight)
 
