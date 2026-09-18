@@ -2,7 +2,7 @@ name: Update Contribution Chart
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 */30 * *"
   push:
     branches:
       - main
