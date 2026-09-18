@@ -6,7 +6,9 @@
 
 # 📊 My Contributions
 
-![GitHub Contribution Chart](./contribution-chart.yml)
+![GitHub Contribution Chart](./contribution-chart.svg)
+![Contribution Chart](./contribution-chart.svg)
+![GitHub Contributions](./profile-3d-contrib/profile-green-animate.svg)
 
 ![Jokes Card](https://readme-jokes.vercel.app/api?theme=tokyonight)
 
