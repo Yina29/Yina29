@@ -8,14 +8,6 @@
 
 ## 📊 GitHub Contributions
 
-<p align="center">
-  <img
-    src="https://github-readme-activity-graph.vercel.app/graph?username=Yina29&theme=github-compact"
-    alt="Yina29 GitHub Contributions"
-  />
-</p>
-
-![contributions](https://raw.githubusercontent.com/USER/USER/output/contributions.svg?style=clean&theme=light)
 
 ![Jokes Card](https://readme-jokes.vercel.app/api?theme=tokyonight)
 
