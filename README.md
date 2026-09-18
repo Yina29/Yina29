@@ -6,11 +6,16 @@
 
 # 📈 Activity Graph:
 
-[![Oihana's GitHub Activity Graph](https://activity-graph.herokuapp.com/graph?username=Aditya664&theme=tokyonight)](https://git.io/praveenscience)
+## 📊 GitHub Contributions
 
-| ![Oihana's github stats](https://github-readme-stats.vercel.app/api?username=Aditya664&show_icons=true&theme=tokyonight) | ![Oihana GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=Aditya664&theme=tokyonight) |
-| --- | --- |
-| ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Aditya664&theme=tokyonight) | ![Github Stars](https://github-readme-stats.vercel.app/api?username=Aditya664&show_icons=true&locale=en&count_private=true&hide_rank=true&custom_title=My%20GitHub%20Stats&disable_animations=true&theme=tokyonight) |
+<p align="center">
+  <img
+    src="https://github-readme-activity-graph.vercel.app/graph?username=Yina29&theme=github-compact"
+    alt="Yina29 GitHub Contributions"
+  />
+</p>
+
+![contributions](https://raw.githubusercontent.com/USER/USER/output/contributions.svg?style=clean&theme=light)
 
 ![Jokes Card](https://readme-jokes.vercel.app/api?theme=tokyonight)
 
