@@ -2,34 +2,33 @@ name: Update Contribution Chart
 
 on:
   schedule:
-    - cron: "0 0 1 * *"
+    - cron: "0 0 * * *"
   push:
-    branches: ["main"]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  generate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Generate contribution chart
-        run: |
-          curl -L "https://github.com/ashutosh00710/github-readme-activity-graph/raw/master/src/index.js" -o /tmp/chart.js
+        uses: yoshi389111/github-profile-3d-contrib@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: Yina29
 
-      - name: Create chart
+      - name: Commit generated files
         run: |
-          echo "Contribution chart generation"
-
-      - name: Commit changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
           git diff --cached --quiet || git commit -m "Update contribution chart"
           git push
