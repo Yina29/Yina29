@@ -6,6 +6,7 @@
 
 # 📊 My Contributions
 
+![GitHub Contribution Chart](./contribution-chart.yml)
 
 ![Jokes Card](https://readme-jokes.vercel.app/api?theme=tokyonight)
 
